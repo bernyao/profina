@@ -1,0 +1,42 @@
+{
+  "name": "profina",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "AI-powered résumé builder with modern templates and intelligent editing",
+  "keywords": ["resume", "AI", "builder", "templates", "PDF", "career"],
+  "author": "Emmanuel Kyeremeh <emmanuelkyeremeh@gmail.com>",
+  "homepage": "https://profina.vercel.app",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tiptap/extension-color": "^3.4.4",
+    "@tiptap/extension-list-item": "^3.4.4",
+    "@tiptap/extension-text-style": "^3.4.4",
+    "@tiptap/react": "^3.4.4",
+    "@tiptap/starter-kit": "^3.4.4",
+    "brain.js": "^2.0.0-beta.23",
+    "firebase": "^12.2.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-pdf": "^8.0.0",
+    "react-router-dom": "^7.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react-swc": "^4.0.1",
+    "eslint": "^9.35.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.4.0",
+    "vite": "^7.1.6"
+  }
+}

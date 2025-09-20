@@ -1,0 +1,267 @@
+/* TemplatesPage.css */
+.templates-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 40px 0;
+}
+
+.templates-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.templates-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.templates-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 16px;
+}
+
+.templates-header p {
+  font-size: 1.125rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.templates-content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.templates-sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.template-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.template-option {
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.template-option:hover {
+  border-color: #3B82F6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.template-option.active {
+  border-color: #3B82F6;
+  background: #f0f9ff;
+}
+
+.template-preview-small {
+  height: 200px;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  transform: scale(0.3);
+  transform-origin: top left;
+  width: 333.33%;
+  height: 666.67%;
+  pointer-events: none;
+}
+
+.template-info h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 4px;
+}
+
+.template-info p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.templates-main {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.template-preview-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8f9fa;
+}
+
+.preview-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.preview-btn {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #6b7280;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preview-btn:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+}
+
+.preview-btn.active {
+  background: #3B82F6;
+  color: white;
+  border-color: #3B82F6;
+}
+
+.use-template-btn {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.use-template-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.template-preview {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.template-preview > div {
+  max-width: 210mm;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.templates-footer {
+  text-align: center;
+}
+
+.template-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.feature {
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.feature h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.feature p {
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .templates-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .templates-sidebar {
+    position: static;
+  }
+  
+  .template-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 16px;
+  }
+  
+  .template-option {
+    min-width: 200px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .templates-container {
+    padding: 0 16px;
+  }
+  
+  .templates-header h1 {
+    font-size: 2rem;
+  }
+  
+  .preview-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .preview-controls {
+    justify-content: center;
+  }
+  
+  .template-preview {
+    padding: 16px;
+  }
+  
+  .template-features {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
