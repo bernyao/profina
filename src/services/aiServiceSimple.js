@@ -4,7 +4,7 @@
 // OpenRouter API service
 const OPENROUTER_API_URL = import.meta.env.VITE_OPENROUTER_API_URL;
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
-const AI_MODEL = import.meta.env.VITE_AI_MODEL || 'sonoma/sonoma-sky-alpha';
+const AI_MODEL = import.meta.env.VITE_AI_MODEL || 'deepseek/deepseek-chat-v3.1:free';
 
 // Simple word replacement suggestions
 const wordReplacements = {
@@ -29,57 +29,74 @@ const wordReplacements = {
   'found': 'discovered'
 };
 
-// AI-powered text enhancement using OpenRouter
+// AI-powered text enhancement using OpenRouter (only for 'suggest' action)
 export const enhanceText = async (text, action = 'improve') => {
-  try {
-    const prompt = getPromptForAction(text, action);
-    
-    const response = await fetch(OPENROUTER_API_URL, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': import.meta.env.VITE_SITE_URL || 'http://localhost:5173',
-        'X-Title': import.meta.env.VITE_SITE_NAME || 'Profina'
-      },
-      body: JSON.stringify({
-        model: AI_MODEL,
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a professional resume writing assistant. Help improve resume content to make it more professional, impactful, and ATS-friendly. Always maintain the original meaning while enhancing the language.'
-          },
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
-        max_tokens: 500,
-        temperature: 0.7
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`OpenRouter API error: ${response.status}`);
-    }
-
-    const data = await response.json();
+  // For simple text improvements, use local patterns (no API calls)
+  if (action === 'improve' || action === 'expand' || action === 'shorten') {
     return {
       success: true,
-      enhancedText: data.choices[0].message.content.trim()
-    };
-  } catch (error) {
-    console.error('AI enhancement error:', error);
-    return {
-      success: false,
-      error: error.message,
-      fallback: getSimpleSuggestion(text)
+      enhancedText: getSimpleSuggestion(text, action)
     };
   }
+  
+  // For 'suggest' action, use DeepSeek API
+  if (action === 'suggest') {
+    try {
+      const prompt = getPromptForAction(text, action);
+      
+      const response = await fetch(OPENROUTER_API_URL, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': import.meta.env.VITE_SITE_URL || 'http://localhost:5173',
+          'X-Title': import.meta.env.VITE_SITE_NAME || 'Profina'
+        },
+        body: JSON.stringify({
+          model: AI_MODEL,
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a professional resume writing assistant. Help improve resume content to make it more professional, impactful, and ATS-friendly. Always maintain the original meaning while enhancing the language.'
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 500,
+          temperature: 0.7
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`OpenRouter API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return {
+        success: true,
+        enhancedText: data.choices[0].message.content.trim()
+      };
+    } catch (error) {
+      console.error('AI enhancement error:', error);
+      return {
+        success: false,
+        error: error.message,
+        fallback: getSimpleSuggestion(text, 'improve')
+      };
+    }
+  }
+  
+  // Default fallback
+  return {
+    success: true,
+    enhancedText: getSimpleSuggestion(text, action)
+  };
 };
 
 // Get simple suggestion as fallback
-export const getSimpleSuggestion = (text) => {
+export const getSimpleSuggestion = (text, action = 'improve') => {
   let enhancedText = text;
   
   // Apply word replacements
@@ -96,6 +113,60 @@ export const getSimpleSuggestion = (text) => {
     .replace(/\s+/g, ' ') // Clean up extra spaces
     .trim();
   
+  // Handle different actions
+  switch (action) {
+    case 'expand':
+      // Add connectors and details for expansion
+      const connectors = ['Furthermore,', 'Additionally,', 'Moreover,', 'In addition,'];
+      const details = [
+        'which significantly enhances the overall effectiveness.',
+        'providing robust and scalable solutions.',
+        'ensuring optimal performance and satisfaction.',
+        'delivering measurable results and long-term value.'
+      ];
+      
+      const randomConnector = connectors[Math.floor(Math.random() * connectors.length)];
+      const randomDetail = details[Math.floor(Math.random() * details.length)];
+      
+      enhancedText = `${randomConnector} ${enhancedText.toLowerCase()} ${randomDetail}`;
+      break;
+      
+    case 'shorten':
+      // Make text more concise
+      enhancedText = enhancedText
+        .replace(/\s+and\s+also\s+/gi, ' and ')
+        .replace(/\s+in\s+order\s+to\s+/gi, ' to ')
+        .replace(/\s+so\s+that\s+/gi, ' so ')
+        .replace(/\s+very\s+/gi, ' ')
+        .replace(/\s+really\s+/gi, ' ')
+        .replace(/\s+quite\s+/gi, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      
+      // If still too long, truncate intelligently
+      if (enhancedText.length > 120) {
+        const truncated = enhancedText.substring(0, 120);
+        const lastSpaceIndex = truncated.lastIndexOf(' ');
+        
+        if (lastSpaceIndex > 80) {
+          enhancedText = enhancedText.substring(0, lastSpaceIndex) + '...';
+        } else {
+          enhancedText = enhancedText.substring(0, 97) + '...';
+        }
+      }
+      break;
+      
+    case 'improve':
+    default:
+      // Default improvements already applied above
+      break;
+  }
+  
+  // Ensure proper capitalization
+  if (enhancedText.charAt(0) !== enhancedText.charAt(0).toUpperCase()) {
+    enhancedText = enhancedText.charAt(0).toUpperCase() + enhancedText.slice(1);
+  }
+  
   return enhancedText;
 };
 
@@ -108,6 +179,8 @@ const getPromptForAction = (text, action) => {
       return `${basePrompt} "${text}"\n\nMake it more detailed and comprehensive while maintaining professionalism.`;
     case 'shorten':
       return `${basePrompt} "${text}"\n\nMake it more concise and to the point while keeping the key information.`;
+    case 'suggest':
+      return `${basePrompt} "${text}"\n\nProvide a completely rewritten version that is more professional, specific, and results-oriented.`;
     case 'rephrase':
       return `${basePrompt} "${text}"\n\nRephrase it with different wording while maintaining the same meaning.`;
     case 'improve':

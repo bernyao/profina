@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserResumes, deleteResume } from "../firebase/resumes";
 import { signOutUser } from "../firebase/auth";
+import { getUserSubscription } from "../firebase/subscriptions";
 import "./Dashboard.css";
 
 const Dashboard = ({ user }) => {
@@ -10,10 +11,12 @@ const Dashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deletingResume, setDeletingResume] = useState(null);
+  const [subscription, setSubscription] = useState(null);
 
   useEffect(() => {
     if (user) {
       loadResumes();
+      loadSubscription();
     }
   }, [user]);
 
@@ -33,8 +36,18 @@ const Dashboard = ({ user }) => {
     }
   };
 
+  const loadSubscription = async () => {
+    try {
+      const sub = await getUserSubscription(user.uid);
+      setSubscription(sub);
+    } catch (error) {
+      console.error("Error loading subscription:", error);
+    }
+  };
+
   const refreshData = async () => {
     await loadResumes();
+    await loadSubscription();
   };
 
   const formatDate = (timestamp) => {
@@ -100,10 +113,27 @@ const Dashboard = ({ user }) => {
           <h1>Welcome back, {user.displayName || "User"}!</h1>
           <p>Create and manage your professional resumes with AI</p>
           <div className="subscription-info">
-            <div className="plan-badge free">🆓 Free</div>
-            <span className="usage-text">
-              {resumes.length} / 10 resumes created
-            </span>
+            {subscription?.plan === "premium" &&
+            subscription?.status === "active" ? (
+              <>
+                <div className="plan-badge premium">⭐ Premium</div>
+                <span className="usage-text">Unlimited resumes</span>
+              </>
+            ) : (
+              <>
+                <div className="plan-badge free">🆓 Free</div>
+                <span className="usage-text">
+                  {subscription?.resumesUsed || resumes.length} /{" "}
+                  {subscription?.resumesLimit || 10} resumes created
+                </span>
+              </>
+            )}
+            {subscription?.plan === "free" &&
+              subscription?.resumesUsed >= subscription?.resumesLimit && (
+                <Link to="/pricing" className="upgrade-link">
+                  Upgrade for unlimited resumes
+                </Link>
+              )}
           </div>
         </div>
         <div className="header-actions">

@@ -55,6 +55,17 @@
   background-color: #f3f4f6;
 }
 
+.pricing-link {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white !important;
+  font-weight: 600;
+}
+
+.pricing-link:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  color: white !important;
+}
+
 .navbar-user {
   display: flex;
   align-items: center;

@@ -6,6 +6,10 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { getResume, createResume, updateResume } from "../firebase/resumes";
+import {
+  canCreateResume,
+  incrementResumeUsage,
+} from "../firebase/subscriptions";
 import ResumeForm from "./ResumeForm";
 import TemplateSelector from "./TemplateSelector";
 import ResumePreview from "./ResumePreview";
@@ -78,9 +82,26 @@ const ResumeBuilder = ({ user }) => {
           return;
         }
       } else {
+        // Check if user can create a new resume
+        const permissionCheck = await canCreateResume(user);
+        if (!permissionCheck.allowed) {
+          if (permissionCheck.reason === "limit_reached") {
+            // Show upgrade modal or redirect to pricing
+            setError(
+              `You've reached your free resume limit (${permissionCheck.used}/${permissionCheck.limit}). Upgrade to premium for unlimited resumes.`
+            );
+            return;
+          } else {
+            setError("Unable to create resume. Please try again.");
+            return;
+          }
+        }
+
         // Create new resume
         const result = await createResume(user.uid, data);
         if (result.success) {
+          // Increment resume usage
+          await incrementResumeUsage(user.uid);
           navigate(`/resume/${result.id}`);
           return;
         } else {

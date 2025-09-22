@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ModernTemplate from "./templates/ModernTemplate";
 import ClassicTemplate from "./templates/ClassicTemplate";
@@ -8,9 +8,19 @@ import "./ResumePreview.css";
 
 const ResumePreview = ({ data, onBack, onEdit }) => {
   const [pdfUrl, setPdfUrl] = useState(null);
+  const [pdfObject, setPdfObject] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [exportError, setExportError] = useState("");
   const resumeRef = useRef(null);
+
+  // Cleanup PDF URL on unmount
+  useEffect(() => {
+    return () => {
+      if (pdfUrl) {
+        URL.revokeObjectURL(pdfUrl);
+      }
+    };
+  }, [pdfUrl]);
 
   const renderTemplate = () => {
     switch (data.template) {
@@ -36,6 +46,9 @@ const ResumePreview = ({ data, onBack, onEdit }) => {
       // Generate PDF
       const pdf = await generateResumePDF(data, templateComponent);
 
+      // Store the PDF object for download
+      setPdfObject(pdf);
+
       // Create blob URL for preview
       const pdfBlob = pdf.output("blob");
       const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -43,15 +56,19 @@ const ResumePreview = ({ data, onBack, onEdit }) => {
       setPdfUrl(pdfUrl);
     } catch (error) {
       console.error("PDF generation error:", error);
-      setExportError("Failed to generate PDF. Please try again.");
+      setExportError(
+        `Failed to generate PDF: ${
+          error.message || "Unknown error"
+        }. Please try again.`
+      );
     } finally {
       setIsGenerating(false);
     }
   };
 
   const handleDownload = () => {
-    if (pdfUrl) {
-      downloadPDF(pdfUrl, `${data.name || "resume"}-resume.pdf`);
+    if (pdfObject) {
+      downloadPDF(pdfObject, `${data.name || "resume"}-resume.pdf`);
     }
   };
 

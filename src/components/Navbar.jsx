@@ -54,6 +54,9 @@ const Navbar = ({ user }) => {
           <Link to="/templates" className="navbar-link">
             Templates
           </Link>
+          <Link to="/pricing" className="navbar-link pricing-link">
+            Pricing
+          </Link>
 
           <div className="navbar-user">
             <span className="user-name">

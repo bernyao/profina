@@ -11,6 +11,7 @@ import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
 import ResumeBuilder from "./components/ResumeBuilder";
 import TemplatesPage from "./components/TemplatesPage";
+import PricingPage from "./components/PricingPage";
 import "./App.css";
 
 const App = () => {
@@ -58,6 +59,10 @@ const App = () => {
               }
             />
             <Route path="/templates" element={<TemplatesPage />} />
+            <Route
+              path="/pricing"
+              element={user ? <PricingPage user={user} /> : <Navigate to="/" />}
+            />
             <Route
               path="/"
               element={user ? <Navigate to="/dashboard" /> : <LandingPage />}

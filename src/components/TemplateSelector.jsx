@@ -154,52 +154,38 @@ const TemplateSelector = ({
         </div>
 
         <div className="template-selector-content">
-          <div className="template-list">
-            <div className="template-list-header">
+          <div className="template-gallery">
+            <div className="template-gallery-header">
               <h2>Available Templates</h2>
               <p>Hover over templates to preview them</p>
             </div>
 
-            <div className="template-options">
+            <div className="template-options-horizontal">
               {templates.map((template) => (
                 <div
                   key={template.id}
-                  className={`template-option ${
+                  className={`template-card ${
                     selectedTemplate === template.id ? "selected" : ""
                   } ${previewTemplate === template.id ? "previewing" : ""}`}
                   onMouseEnter={() => handleTemplateHover(template.id)}
                   onClick={() => handleTemplateSelect(template.id)}
                 >
-                  <div className="template-preview-small">
+                  <div className="template-preview-thumbnail">
                     <template.component data={previewData} />
                   </div>
-
-                  <div className="template-info">
-                    <h3>{template.name}</h3>
+                  <div className="template-card-info">
+                    <h4>{template.name}</h4>
                     <p>{template.description}</p>
-
-                    <div className="template-features">
-                      {template.features.map((feature, index) => (
-                        <span key={index} className="feature-tag">
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="template-best-for">
-                      <strong>Best for:</strong> {template.bestFor}
-                    </div>
                   </div>
-
                   {selectedTemplate === template.id && (
-                    <div className="selected-indicator">✓ Selected</div>
+                    <div className="selected-badge">✓</div>
                   )}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="template-preview-panel">
+          <div className="template-preview-section">
             <div className="preview-header">
               <h2>Live Preview</h2>
               <span className="preview-template-name">

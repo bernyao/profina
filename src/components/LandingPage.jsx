@@ -295,117 +295,264 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="how-it-works">
+      {/* Process Flow Section */}
+      <section className="process-flow">
         <div className="container">
-          <h2>How It Works</h2>
-          <div className="steps">
-            <div className="step">
-              <div className="step-number">1</div>
-              <h3>Input Your Information</h3>
-              <p>
-                Fill in your personal details, experience, education, and skills
-                using our intuitive form.
-              </p>
+          <div className="section-header">
+            <h2>From Zero to Hero Resume</h2>
+            <p>Transform your career prospects in just 4 simple steps</p>
+          </div>
+          <div className="process-timeline">
+            <div className="timeline-item">
+              <div className="timeline-icon">
+                <div className="icon-circle">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M16 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6C4 4.89543 4.89543 4 6 4H8"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path d="M12 2V6" stroke="currentColor" strokeWidth="2" />
+                    <path d="M8 2V6" stroke="currentColor" strokeWidth="2" />
+                    <path d="M16 2V6" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                </div>
+              </div>
+              <div className="timeline-content">
+                <h3>Tell Your Story</h3>
+                <p>
+                  Input your background, experience, and achievements using our
+                  smart form that guides you through every section.
+                </p>
+              </div>
             </div>
-            <div className="step">
-              <div className="step-number">2</div>
-              <h3>AI Enhances Content</h3>
-              <p>
-                Our AI analyzes your content and suggests improvements to make
-                your resume more professional and ATS-friendly.
-              </p>
+
+            <div className="timeline-connector"></div>
+
+            <div className="timeline-item">
+              <div className="timeline-icon">
+                <div className="icon-circle">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div className="timeline-content">
+                <h3>AI Magic Happens</h3>
+                <p>
+                  Our intelligent AI analyzes your content and suggests powerful
+                  improvements to make your resume irresistible to employers.
+                </p>
+              </div>
             </div>
-            <div className="step">
-              <div className="step-number">3</div>
-              <h3>Choose Template</h3>
-              <p>
-                Select from our professional templates that best match your
-                industry and personal style.
-              </p>
+
+            <div className="timeline-connector"></div>
+
+            <div className="timeline-item">
+              <div className="timeline-icon">
+                <div className="icon-circle">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M7 21H17C18.1046 21 19 20.1046 19 19V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21Z"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path d="M9 7H15" stroke="currentColor" strokeWidth="2" />
+                    <path d="M9 11H15" stroke="currentColor" strokeWidth="2" />
+                    <path d="M9 15H13" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                </div>
+              </div>
+              <div className="timeline-content">
+                <h3>Pick Your Style</h3>
+                <p>
+                  Choose from our curated collection of professional templates,
+                  each designed to showcase your unique strengths.
+                </p>
+              </div>
             </div>
-            <div className="step">
-              <div className="step-number">4</div>
-              <h3>Export & Apply</h3>
-              <p>
-                Download as PDF and start applying to jobs with confidence. Win
-                more interviews!
-              </p>
+
+            <div className="timeline-connector"></div>
+
+            <div className="timeline-item">
+              <div className="timeline-icon">
+                <div className="icon-circle">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M7 10L12 15L17 10"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path d="M12 15V3" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                </div>
+              </div>
+              <div className="timeline-content">
+                <h3>Land Your Dream Job</h3>
+                <p>
+                  Download your perfectly formatted PDF and start applying with
+                  confidence. Your next interview is just one application away!
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Templates Section */}
-      <section className="templates-section">
+      {/* Templates Showcase Section */}
+      <section className="templates-showcase">
         <div className="container">
-          <h2>Professional Templates</h2>
-          <div className="templates-grid">
-            <div className="template-card">
-              <div className="template-preview modern">
-                <div className="template-header">
-                  <div className="template-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+          <div className="section-header">
+            <h2>Choose Your Professional Style</h2>
+            <p>
+              Each template is crafted by design experts and optimized for ATS
+              systems
+            </p>
+          </div>
+
+          <div className="templates-showcase-grid">
+            <div className="template-showcase-card modern-template">
+              <div className="template-visual">
+                <div className="template-mockup">
+                  <div className="mockup-header">
+                    <div className="mockup-dots">
+                      <span className="dot red"></span>
+                      <span className="dot yellow"></span>
+                      <span className="dot green"></span>
+                    </div>
+                    <div className="mockup-title">Resume.pdf</div>
+                  </div>
+                  <div className="mockup-content modern-layout">
+                    <div className="mockup-name-line"></div>
+                    <div className="mockup-title-line"></div>
+                    <div className="mockup-section">
+                      <div className="section-header-line"></div>
+                      <div className="content-line short"></div>
+                      <div className="content-line long"></div>
+                      <div className="content-line medium"></div>
+                    </div>
+                    <div className="mockup-section">
+                      <div className="section-header-line"></div>
+                      <div className="content-line long"></div>
+                      <div className="content-line short"></div>
+                    </div>
                   </div>
                 </div>
-                <div className="template-content">
-                  <div className="template-line long"></div>
-                  <div className="template-line medium"></div>
-                  <div className="template-line short"></div>
-                  <div className="template-line long"></div>
+                <div className="template-badge modern-badge">
+                  <span>Modern</span>
                 </div>
               </div>
-              <h3>Modern</h3>
-              <p>
-                Clean, contemporary design perfect for tech and creative
-                professionals.
-              </p>
+              <div className="template-info">
+                <h3>Modern</h3>
+                <p>
+                  Bold, contemporary design with clean typography. Perfect for
+                  tech professionals, designers, and creative roles.
+                </p>
+                <div className="template-tags">
+                  <span className="tag">Tech</span>
+                  <span className="tag">Creative</span>
+                  <span className="tag">ATS-Friendly</span>
+                </div>
+              </div>
             </div>
-            <div className="template-card">
-              <div className="template-preview classic">
-                <div className="template-header">
-                  <div className="template-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+
+            <div className="template-showcase-card classic-template">
+              <div className="template-visual">
+                <div className="template-mockup">
+                  <div className="mockup-header">
+                    <div className="mockup-dots">
+                      <span className="dot red"></span>
+                      <span className="dot yellow"></span>
+                      <span className="dot green"></span>
+                    </div>
+                    <div className="mockup-title">Resume.pdf</div>
+                  </div>
+                  <div className="mockup-content classic-layout">
+                    <div className="mockup-name-line"></div>
+                    <div className="mockup-title-line"></div>
+                    <div className="two-column">
+                      <div className="column-left">
+                        <div className="section-header-line"></div>
+                        <div className="content-line short"></div>
+                        <div className="content-line medium"></div>
+                      </div>
+                      <div className="column-right">
+                        <div className="section-header-line"></div>
+                        <div className="content-line long"></div>
+                        <div className="content-line short"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="template-content">
-                  <div className="template-line long"></div>
-                  <div className="template-line medium"></div>
-                  <div className="template-line short"></div>
-                  <div className="template-line long"></div>
+                <div className="template-badge classic-badge">
+                  <span>Classic</span>
                 </div>
               </div>
-              <h3>Classic</h3>
-              <p>
-                Traditional layout ideal for corporate and business
-                environments.
-              </p>
+              <div className="template-info">
+                <h3>Classic</h3>
+                <p>
+                  Traditional two-column layout with timeless elegance. Ideal
+                  for corporate environments and business professionals.
+                </p>
+                <div className="template-tags">
+                  <span className="tag">Corporate</span>
+                  <span className="tag">Business</span>
+                  <span className="tag">Professional</span>
+                </div>
+              </div>
             </div>
-            <div className="template-card">
-              <div className="template-preview minimal">
-                <div className="template-header">
-                  <div className="template-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+
+            <div className="template-showcase-card minimal-template">
+              <div className="template-visual">
+                <div className="template-mockup">
+                  <div className="mockup-header">
+                    <div className="mockup-dots">
+                      <span className="dot red"></span>
+                      <span className="dot yellow"></span>
+                      <span className="dot green"></span>
+                    </div>
+                    <div className="mockup-title">Resume.pdf</div>
+                  </div>
+                  <div className="mockup-content minimal-layout">
+                    <div className="mockup-name-line"></div>
+                    <div className="mockup-title-line"></div>
+                    <div className="mockup-section">
+                      <div className="section-header-line"></div>
+                      <div className="content-line short"></div>
+                      <div className="content-line long"></div>
+                    </div>
+                    <div className="mockup-section">
+                      <div className="section-header-line"></div>
+                      <div className="content-line medium"></div>
+                      <div className="content-line short"></div>
+                    </div>
                   </div>
                 </div>
-                <div className="template-content">
-                  <div className="template-line long"></div>
-                  <div className="template-line medium"></div>
-                  <div className="template-line short"></div>
-                  <div className="template-line long"></div>
+                <div className="template-badge minimal-badge">
+                  <span>Minimal</span>
                 </div>
               </div>
-              <h3>Minimal</h3>
-              <p>
-                Simple, elegant design that lets your experience speak for
-                itself.
-              </p>
+              <div className="template-info">
+                <h3>Minimal</h3>
+                <p>
+                  Clean, distraction-free design that puts the focus on your
+                  achievements. Great for executives and senior roles.
+                </p>
+                <div className="template-tags">
+                  <span className="tag">Executive</span>
+                  <span className="tag">Clean</span>
+                  <span className="tag">Elegant</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

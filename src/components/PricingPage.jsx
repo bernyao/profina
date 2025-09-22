@@ -1,0 +1,204 @@
+import React, { useState, useEffect } from "react";
+import { PaystackButton } from "react-paystack";
+import { createSubscription } from "../firebase/subscriptions";
+import { auth } from "../firebase/config";
+import "./PricingPage.css";
+
+const PricingPage = ({ user, onSubscriptionUpdate }) => {
+  const [loading, setLoading] = useState(false);
+  const [subscription, setSubscription] = useState(null);
+
+  // Paystack configuration
+  const publicKey =
+    import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_your_public_key_here";
+  const amount = parseInt(import.meta.env.VITE_PREMIUM_PRICE_PESEWAS) || 2000; // 20 GHS in pesewas
+  const currency = import.meta.env.VITE_CURRENCY_CODE || "GHS";
+  const priceGHS = import.meta.env.VITE_PREMIUM_PRICE_GHS || 20;
+
+  useEffect(() => {
+    // Load current subscription status
+    loadSubscription();
+  }, [user]);
+
+  const loadSubscription = async () => {
+    if (!user) return;
+
+    try {
+      const { getUserSubscription } = await import("../firebase/subscriptions");
+      const sub = await getUserSubscription(user.uid);
+      setSubscription(sub);
+    } catch (error) {
+      console.error("Error loading subscription:", error);
+    }
+  };
+
+  const handlePaymentSuccess = async (response) => {
+    setLoading(true);
+    try {
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        throw new Error("User not authenticated");
+      }
+
+      // Create subscription in Firebase
+      await createSubscription(currentUser.uid, {
+        customerId: response.customer?.customer_code,
+        subscriptionId: response.subscription?.subscription_code,
+        reference: response.reference,
+      });
+
+      // Reload subscription data
+      await loadSubscription();
+
+      // Notify parent component
+      if (onSubscriptionUpdate) {
+        onSubscriptionUpdate();
+      }
+
+      alert("Payment successful! You now have unlimited resumes.");
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      alert(
+        "Payment successful but there was an error updating your subscription. Please contact support."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePaymentClose = () => {
+    console.log("Payment cancelled");
+  };
+
+  const paystackProps = {
+    email: user?.email || "",
+    amount: amount,
+    currency: currency,
+    publicKey: publicKey,
+    text: `Subscribe Now - ${priceGHS} GHS/month`,
+    onSuccess: handlePaymentSuccess,
+    onClose: handlePaymentClose,
+    metadata: {
+      userId: user?.uid,
+      plan: "premium",
+      custom_fields: [
+        {
+          display_name: "User ID",
+          variable_name: "user_id",
+          value: user?.uid,
+        },
+      ],
+    },
+  };
+
+  const isPremium =
+    subscription?.plan === "premium" && subscription?.status === "active";
+
+  return (
+    <div className="pricing-page">
+      <div className="pricing-container">
+        <div className="pricing-header">
+          <h1>Choose Your Plan</h1>
+          <p>Unlock the full potential of Profina with our flexible pricing</p>
+        </div>
+
+        <div className="pricing-cards">
+          {/* Free Plan */}
+          <div className={`pricing-card ${!isPremium ? "current-plan" : ""}`}>
+            <div className="plan-header">
+              <h3>Free Plan</h3>
+              <div className="price">
+                <span className="currency">₵</span>
+                <span className="amount">0</span>
+                <span className="period">/month</span>
+              </div>
+            </div>
+            <div className="plan-features">
+              <ul>
+                <li>
+                  ✓ {import.meta.env.VITE_MAX_RESUMES_FREE || 10} resumes per
+                  month
+                </li>
+                <li>✓ AI-powered resume generation</li>
+                <li>✓ PDF export</li>
+                <li>✓ 3 professional templates</li>
+                <li>✓ Basic resume editor</li>
+                <li>✓ ATS-friendly formatting</li>
+                <li>✗ Priority support</li>
+                <li>✗ Usage tracking</li>
+              </ul>
+            </div>
+            <div className="plan-status">
+              {!isPremium && (
+                <span className="current-badge">Current Plan</span>
+              )}
+            </div>
+          </div>
+
+          {/* Premium Plan */}
+          <div
+            className={`pricing-card premium ${
+              isPremium ? "current-plan" : ""
+            }`}
+          >
+            <div className="plan-badge">Most Popular</div>
+            <div className="plan-header">
+              <h3>Premium Plan</h3>
+              <div className="price">
+                <span className="currency">₵</span>
+                <span className="amount">{priceGHS}</span>
+                <span className="period">/month</span>
+              </div>
+            </div>
+            <div className="plan-features">
+              <ul>
+                <li>
+                  ✓{" "}
+                  {import.meta.env.VITE_MAX_RESUMES_PREMIUM === "-1"
+                    ? "Unlimited"
+                    : import.meta.env.VITE_MAX_RESUMES_PREMIUM}{" "}
+                  resumes
+                </li>
+                <li>✓ AI-powered resume generation</li>
+                <li>✓ PDF export</li>
+                <li>✓ All templates (3 professional templates)</li>
+                <li>✓ Advanced resume editor</li>
+                <li>✓ ATS-friendly formatting</li>
+                <li>✓ Priority support</li>
+                <li>✓ Usage tracking</li>
+              </ul>
+            </div>
+            <div className="plan-actions">
+              {isPremium ? (
+                <div className="subscription-status">
+                  <span className="active-badge">✓ Active Subscription</span>
+                  <p>
+                    Next billing:{" "}
+                    {subscription?.nextBillingDate
+                      ? new Date(
+                          subscription.nextBillingDate
+                        ).toLocaleDateString()
+                      : "N/A"}
+                  </p>
+                </div>
+              ) : (
+                <PaystackButton
+                  {...paystackProps}
+                  className="subscribe-button"
+                  disabled={loading}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="pricing-footer">
+          <p>All plans include secure payment processing via Paystack</p>
+          <p>Cancel anytime • No setup fees • 30-day money-back guarantee</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PricingPage;

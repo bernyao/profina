@@ -15,129 +15,272 @@ const ClassicTemplate = ({ data }) => {
   } = data;
 
   return (
-    <div className="classic-resume bg-white text-gray-800" style={{ fontSize: '11px', lineHeight: '1.5', fontFamily: 'Georgia, serif' }}>
+    <article className="classic-resume" style={{ 
+      fontSize: '11px', 
+      lineHeight: '1.5', 
+      fontFamily: 'Times New Roman, serif',
+      color: '#000',
+      backgroundColor: '#fff',
+      padding: '40px',
+      maxWidth: '210mm',
+      margin: '0 auto',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
       {/* Header */}
-      <div className="text-center border-b-2 border-gray-400 pb-4 mb-6" style={{ borderBottom: '3px solid #374151' }}>
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">{name}</h1>
-        <h2 className="text-lg text-gray-600 mb-3">{title}</h2>
-        <div className="flex justify-center gap-6 text-sm">
-          {email && <span>{email}</span>}
-          {phone && <span>{phone}</span>}
-          {location && <span>{location}</span>}
+      <header style={{ marginBottom: '30px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+          <div style={{ flex: '2' }}>
+            <h1 style={{ 
+              fontSize: '28px', 
+              fontWeight: 'bold', 
+              color: '#000',
+              marginBottom: '8px',
+              fontFamily: 'Times New Roman, serif'
+            }}>
+              {name}
+            </h1>
+            {summary && (
+              <p style={{ 
+                fontSize: '11px', 
+                color: '#000',
+                margin: 0,
+                fontStyle: 'italic'
+              }}>
+                {summary}
+              </p>
+            )}
+          </div>
+          <address style={{ flex: '1', textAlign: 'right', fontSize: '11px', lineHeight: '1.6', fontStyle: 'normal' }}>
+            {location && <div>{location}</div>}
+            {phone && <div>{phone}</div>}
+            {email && <div>{email}</div>}
+          </address>
         </div>
-      </div>
+      </header>
 
-      <div className="px-6 pb-6" style={{ padding: '24px 32px' }}>
-        {/* Professional Summary */}
-        {summary && (
-          <section className="mb-6" style={{ marginBottom: '20px' }}>
-            <h3 className="text-lg font-bold text-gray-800 mb-3 uppercase tracking-wide" style={{ fontSize: '14px', fontWeight: '700', letterSpacing: '0.5px' }}>
-              Professional Summary
-            </h3>
-            <p className="text-gray-700 leading-relaxed text-justify" style={{ fontSize: '11px', lineHeight: '1.5', wordWrap: 'break-word', overflowWrap: 'break-word' }}>{summary}</p>
-          </section>
-        )}
-
-        {/* Experience */}
-        {experience.length > 0 && (
-          <section className="mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-3 uppercase tracking-wide">
-              Professional Experience
-            </h3>
-            <div className="space-y-5">
-              {experience.map((exp, index) => (
-                <div key={index}>
-                  <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-bold text-gray-800 text-base">{exp.position}</h4>
-                    <span className="text-sm text-gray-600 font-medium">{exp.duration}</span>
-                  </div>
-                  <div className="text-gray-600 font-medium mb-2 italic">{exp.company}</div>
-                  {exp.description && (
-                    <p className="text-gray-700 text-sm leading-relaxed text-justify">{exp.description}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Education */}
-        {education.length > 0 && (
-          <section className="mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-3 uppercase tracking-wide">
-              Education
-            </h3>
-            <div className="space-y-4">
-              {education.map((edu, index) => (
-                <div key={index} className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-bold text-gray-800">{edu.degree}</h4>
-                    <div className="text-gray-600 font-medium">{edu.institution}</div>
-                    {edu.gpa && <span className="text-sm text-gray-600">GPA: {edu.gpa}</span>}
-                  </div>
-                  <span className="text-sm text-gray-600 font-medium">{edu.year}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Skills */}
-        {skills.length > 0 && (
-          <section className="mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-3 uppercase tracking-wide">
-              Technical Skills
-            </h3>
-            <div className="grid grid-cols-2 gap-2">
-              {skills.map((skill, index) => (
-                <div key={index} className="text-gray-700 text-sm">
-                  • {skill}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Projects */}
-        {projects.length > 0 && (
-          <section className="mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-3 uppercase tracking-wide">
-              Key Projects
-            </h3>
-            <div className="space-y-4">
-              {projects.map((project, index) => (
-                <div key={index}>
-                  <div className="flex justify-between items-start mb-1">
-                    <h4 className="font-bold text-gray-800">{project.name}</h4>
-                    {project.link && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 text-sm hover:underline"
-                      >
-                        View Project
-                      </a>
+      <main style={{ display: 'flex', gap: '30px' }}>
+        {/* Left Column */}
+        <div style={{ flex: '2' }}>
+          {/* Experience */}
+          {experience.length > 0 && (
+            <section style={{ marginBottom: '24px' }}>
+              <h3 style={{ 
+                fontSize: '14px', 
+                fontWeight: 'bold', 
+                color: '#0066cc',
+                marginBottom: '16px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>
+                Experience
+              </h3>
+              <div>
+                {experience.map((exp, index) => (
+                  <div key={index} style={{ marginBottom: '16px' }}>
+                    <div style={{ 
+                      fontSize: '12px', 
+                      fontWeight: 'bold', 
+                      color: '#000',
+                      marginBottom: '4px'
+                    }}>
+                      {exp.position}
+                    </div>
+                    <div style={{ fontSize: '10px', color: '#666', marginBottom: '8px' }}>
+                      {exp.duration}
+                    </div>
+                    <div style={{ 
+                      fontSize: '11px', 
+                      lineHeight: '1.4', 
+                      margin: 0, 
+                      wordWrap: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontStyle: 'italic'
+                    }}>
+                      <span style={{ fontStyle: 'normal' }}>{exp.company}</span>
+                    </div>
+                    {exp.description && (
+                      <div style={{ 
+                        fontSize: '11px', 
+                        lineHeight: '1.4', 
+                        margin: '8px 0 0 0', 
+                        wordWrap: 'break-word', 
+                        overflowWrap: 'break-word'
+                      }}>
+                        {exp.description.split('\n').filter(line => line.trim()).map((line, lineIndex) => (
+                          <div key={lineIndex} style={{ marginBottom: '4px' }}>
+                            {line}
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </div>
-                  {project.description && (
-                    <p className="text-gray-700 text-sm leading-relaxed text-justify mb-1">
-                      {project.description}
-                    </p>
-                  )}
-                  {project.technologies && (
-                    <div className="text-sm text-gray-600">
-                      <span className="font-medium">Technologies Used: </span>
-                      {project.technologies}
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Education */}
+          {education.length > 0 && (
+            <section style={{ marginBottom: '24px' }}>
+              <h3 style={{ 
+                fontSize: '14px', 
+                fontWeight: 'bold', 
+                color: '#0066cc',
+                marginBottom: '16px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>
+                Education
+              </h3>
+              <div>
+                {education.map((edu, index) => (
+                  <div key={index} style={{ marginBottom: '16px' }}>
+                    <div style={{ 
+                      fontSize: '12px', 
+                      fontWeight: 'bold', 
+                      color: '#000',
+                      marginBottom: '4px'
+                    }}>
+                      {edu.degree}
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
-    </div>
+                    <div style={{ fontSize: '10px', color: '#666', marginBottom: '8px' }}>
+                      {edu.year}
+                    </div>
+                    <div style={{ 
+                      fontSize: '11px', 
+                      lineHeight: '1.4', 
+                      margin: 0, 
+                      wordWrap: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontStyle: 'italic'
+                    }}>
+                      <span style={{ fontStyle: 'normal' }}>{edu.institution}</span>
+                    </div>
+                    {edu.gpa && (
+                      <div style={{ 
+                        fontSize: '11px', 
+                        lineHeight: '1.4', 
+                        margin: '4px 0 0 0', 
+                        wordWrap: 'break-word', 
+                        overflowWrap: 'break-word'
+                      }}>
+                        GPA: {edu.gpa}
+                      </div>
+                    )}
+                    {edu.description && (
+                      <div style={{ 
+                        fontSize: '11px', 
+                        lineHeight: '1.4', 
+                        margin: '4px 0 0 0', 
+                        wordWrap: 'break-word', 
+                        overflowWrap: 'break-word'
+                      }}>
+                        {edu.description}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Projects */}
+          {projects.length > 0 && (
+            <section style={{ marginBottom: '24px' }}>
+              <h3 style={{ 
+                fontSize: '14px', 
+                fontWeight: 'bold', 
+                color: '#0066cc',
+                marginBottom: '16px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>
+                Projects
+              </h3>
+              <div>
+                {projects.map((project, index) => (
+                  <div key={index} style={{ marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                      <div style={{ 
+                        fontSize: '12px', 
+                        fontWeight: 'bold', 
+                        color: '#000'
+                      }}>
+                        {project.name}
+                      </div>
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ fontSize: '10px', color: '#0066cc', textDecoration: 'none' }}
+                        >
+                          View Project →
+                        </a>
+                      )}
+                    </div>
+                    {project.description && (
+                      <div style={{ 
+                        fontSize: '11px', 
+                        lineHeight: '1.4', 
+                        margin: '4px 0 0 0', 
+                        wordWrap: 'break-word', 
+                        overflowWrap: 'break-word'
+                      }}>
+                        {project.description.split('\n').filter(line => line.trim()).map((line, lineIndex) => (
+                          <div key={lineIndex} style={{ marginBottom: '4px' }}>
+                            {line}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {project.technologies && (
+                      <div style={{ 
+                        fontSize: '10px', 
+                        color: '#666',
+                        margin: '4px 0 0 0', 
+                        wordWrap: 'break-word', 
+                        overflowWrap: 'break-word'
+                      }}>
+                        Technologies: {project.technologies}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* Right Column */}
+        <div style={{ flex: '1' }}>
+          {/* Skills */}
+          {skills.length > 0 && (
+            <section style={{ marginBottom: '24px' }}>
+              <h3 style={{ 
+                fontSize: '14px', 
+                fontWeight: 'bold', 
+                color: '#0066cc',
+                marginBottom: '16px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>
+                Skills
+              </h3>
+              <div style={{ fontSize: '11px', lineHeight: '1.6' }}>
+                {skills.map((skill, index) => (
+                  <div key={index} style={{ marginBottom: '4px' }}>
+                    • {skill}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+        </div>
+      </main>
+    </article>
   );
 };
 
