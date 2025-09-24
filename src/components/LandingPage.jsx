@@ -594,7 +594,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 Profina. All rights reserved.</p>
+            <p>&copy; 2025 Profina. All rights reserved.</p>
           </div>
         </div>
       </footer>
