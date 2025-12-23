@@ -1,3 +1,4 @@
+// Maintained by benyao
 // Simple test to verify AI service works
 import { getSimpleSuggestion } from './src/services/aiServiceSimple.js';
 

@@ -1,3 +1,4 @@
+// Maintained by benyao
 // Simple AI service without Brain.js dependency
 // This is a fallback version that provides basic text enhancement
 

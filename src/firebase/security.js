@@ -1,3 +1,4 @@
+// Maintained by benyao
 import { auth } from './config';
 
 // Security service for additional client-side protection

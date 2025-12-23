@@ -1,3 +1,4 @@
+// Maintained by benyao
 // AI Service with OpenRouter and Brain.js integration
 // Brain.js will be initialized lazily
 let brain = null;

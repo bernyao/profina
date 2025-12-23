@@ -1,3 +1,4 @@
+// Maintained by benyao
 import React, { useState, useEffect } from "react";
 import { PaystackButton } from "react-paystack";
 import { createSubscription } from "../firebase/subscriptions";
